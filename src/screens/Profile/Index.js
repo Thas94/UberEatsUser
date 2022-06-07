@@ -1,7 +1,9 @@
 import { View, Text, TextInput, StyleSheet, Button, Alert } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Auth } from "aws-amplify";
+import { Auth, DataStore } from "aws-amplify";
+import {User} from '../../models/index';
+import { useAuthContext } from "../../context/AuthContext";
 
 const Profile = () => {
 
@@ -10,7 +12,17 @@ const Profile = () => {
   const [lat, setLat] = useState("0");
   const [lng, setLng] = useState("0");
 
-  const onSave = () => {};
+  const {sub, setDbUser} = useAuthContext();
+
+  const onSave = async () => {
+    try{
+      const user = await DataStore.save(new User({name,address,lat: parseFloat(lat),lng: parseFloat(lng),sub}));
+      setDbUser(user);
+    }
+    catch(e){
+      Alert.alert('Error occured', e.message);
+    }
+  };
 
   return (
     <SafeAreaView>

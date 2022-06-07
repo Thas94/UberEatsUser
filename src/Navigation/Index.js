@@ -9,14 +9,23 @@ import {createMaterialBottomTabNavigator} from '@react-navigation/material-botto
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { FontAwesome5, FontAwesome, MaterialCommunityIcons} from '@expo/vector-icons';
 import Profile from '../screens/Profile/Index';
-
-
+import { useAuthContext } from '../context/AuthContext';
+ 
 const Stack = createNativeStackNavigator();
 
 const RootNavigator = () => {
+
+    const {dbUser} = useAuthContext();
+
     return (
         <Stack.Navigator screenOptions={{headerShown: false}}>
-            <Stack.Screen name='HomeScreen' component={HomeTabs} /> 
+
+            {dbUser ? (
+                <Stack.Screen name='HomeScreen' component={HomeTabs} />
+            ) : (
+                <Stack.Screen name='Profile' component={Profile} />  
+            )}
+
         </Stack.Navigator>
     );
 }; 
