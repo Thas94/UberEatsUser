@@ -19,10 +19,12 @@ const RestaurantDetailsPage = () =>{
     const id = route.params?.id; 
 
     useEffect(() =>{
-        DataStore.query(Restaurant, id).then(setRestaurant);
+        if(id){
+            DataStore.query(Restaurant, id).then(setRestaurant);
 
-        DataStore.query(Dish, (dish) => dish.restaurantID('eq', id)).then(setDish);
-    },[]);
+            DataStore.query(Dish, (dish) => dish.restaurantID('eq', id)).then(setDish);
+        }
+    },[id]);
 
     if(!restaurant){
         return <ActivityIndicator size={'large'} style={{paddingVertical: 350}}/>
