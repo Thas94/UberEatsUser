@@ -23,7 +23,7 @@ const RootNavigator = () => {
 
 const Tab = createBottomTabNavigator();
 
-const HomeTabs = () => {
+const HomeTabs = () => { 
     return(
         <Tab.Navigator screenOptions={{headerShown: false}} barStyle={{backgroundColor: 'white'}}>
             <Tab.Screen name='Home' component={HomeStackNavigator} 

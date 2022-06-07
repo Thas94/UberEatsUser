@@ -2,6 +2,8 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
+const DEFAULT_PICTURE = 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant1.jpeg'; 
+
  const RestaurantItem = ({restaurant}) =>{ 
 
   const navigation = useNavigation();
@@ -12,17 +14,17 @@ import { useNavigation } from '@react-navigation/native';
   return (
     <Pressable onPress={onPress} style={styles.restaurantContainer}> 
         <Image source={{
-            uri: restaurant.image,
+            uri: restaurant.image.startsWith('http') ? restaurant.image : DEFAULT_PICTURE,
         }}
         style={styles.image}/>
         <View style={styles.row}> 
             <View>
                 <Text style={styles.title}>{restaurant.name}</Text>
-                <Text style={styles.subtitle}>R{restaurant.deliveryFee} &#8226; 
+                <Text style={styles.subtitle}>R{restaurant.deliveryFee.toFixed(2)} &#8226; 
                 {restaurant.minDeliveryTime}-{restaurant.maxDeliveryTime} minutes</Text> 
             </View>   
             <View style={styles.rating}>
-                <Text>{restaurant.rating}</Text>
+                <Text>{restaurant.rating.toFixed(1)}</Text>
             </View>     
         </View>
     </Pressable>
