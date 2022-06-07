@@ -5,7 +5,7 @@ import OrderItems from '../../data/orders.json';
 
 const Orders = () => {
     return(
-        <View style={{flex: 1, width: '100%', paddingTop: 50}}>
+        <View style={{flex: 1, width: '100%'}}>
             <FlatList data={OrderItems} renderItem={({item}) => <OrdersListItem order={item} /> } />
         </View>
     );

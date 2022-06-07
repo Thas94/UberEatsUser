@@ -1,4 +1,5 @@
 import { StyleSheet, FlatList, View } from 'react-native';
+import { useState } from 'react';
 import RestaurantItem from '../../components/RestaurantItem/Index';
 import restaurants from '../../data/restaurants.json'
 
