@@ -7,6 +7,7 @@ import { useRoute, useNavigation } from '@react-navigation/native';
 import {useState, useEffect} from 'react';
 import { DataStore } from 'aws-amplify';
 import {Restaurant, Dish} from '../../models/index';
+import { useBusketContext } from '../../context/BusketContext';
 
 const RestaurantDetailsPage = () =>{
 
@@ -17,14 +18,22 @@ const RestaurantDetailsPage = () =>{
     const navigation = useNavigation();
 
     const id = route.params?.id; 
+    const {setRestaurant: setBusketRestaurant} = useBusketContext();
 
     useEffect(() =>{
-        if(id){
-            DataStore.query(Restaurant, id).then(setRestaurant);
-
-            DataStore.query(Dish, (dish) => dish.restaurantID('eq', id)).then(setDish);
+        if(!id){
+            return;
         }
+        setBusketRestaurant(null);
+
+        DataStore.query(Restaurant, id).then(setRestaurant);
+
+        DataStore.query(Dish, (dish) => dish.restaurantID('eq', id)).then(setDish);
     },[id]);
+
+    useEffect(() => {
+        setBusketRestaurant(restaurant);
+    }, [restaurant])
 
     if(!restaurant){
         return <ActivityIndicator size={'large'} style={{paddingVertical: 350}}/>

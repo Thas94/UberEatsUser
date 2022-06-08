@@ -6,6 +6,7 @@ import {Amplify} from 'aws-amplify';
 import config from './src/aws-exports';
 import {withAuthenticator} from 'aws-amplify-react-native';
 import AuthContextProvider from './src/context/AuthContext';
+import BusketContextProvider from './src/context/BusketContext'; 
 
 
 Amplify.configure({
@@ -19,7 +20,9 @@ function App() {
   return (
     <NavigationContainer>
           <AuthContextProvider>
-            <RootNavigator />
+            <BusketContextProvider>
+              <RootNavigator />
+            </BusketContextProvider>
           </AuthContextProvider>
 
         <StatusBar style='auto'/>

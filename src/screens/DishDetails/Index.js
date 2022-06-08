@@ -4,6 +4,7 @@ import { useState, useEffect} from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Dish} from '../../models/index'; 
 import { DataStore } from 'aws-amplify';
+import {useBusketContext} from '../../context/BusketContext';
 
 const DishDetails = () => {
 
@@ -15,11 +16,18 @@ const DishDetails = () => {
     const route = useRoute();
     const id = route.params?.id;
 
+    const {addDishToBusket} =  useBusketContext();
+
     useEffect(() => {
         if(id){
             DataStore.query(Dish, id).then(setDishes);
         }
     },[id]);
+
+    const onAddToBusket = async () => {
+       await addDishToBusket(dish,quantity);
+       navigation.goBack();
+    }
 
     const onMinus = () => {
         if(quantity > 1){
@@ -54,7 +62,7 @@ const DishDetails = () => {
                 <AntDesign name='pluscircleo' size={60} color={'black'} onPress={onPlus}/>
             </View>
 
-            <Pressable onPress={() => navigation.navigate('Busket')} style={styles.button}>
+            <Pressable onPress={onAddToBusket} style={styles.button}>
                 <Text style={styles.buttonText}>Add {quantity} to basket &#8226; (R{getTotal()})</Text>
             </Pressable>
 
