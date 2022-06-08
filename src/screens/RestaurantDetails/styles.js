@@ -31,5 +31,17 @@ export default StyleSheet.create({
     },
     container: {
         margin: 10,
-    }
+    },
+    button: {
+        marginTop: 'auto',
+        alignItems: 'center',
+        backgroundColor: 'black',
+        padding: 10,
+        margin: 10 
+    },
+    buttonText: {
+        fontSize: 20,
+        fontWeight: '600',
+        color: 'white'
+    },
 });

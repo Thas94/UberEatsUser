@@ -11,6 +11,12 @@ const BusketContextProvider = ({children}) => {
 
     const [restaurant, setRestaurant] = useState(null);
     const [busket, setBusket] = useState(null);
+    const [busketDishes, setBusketDishes] = useState([]); 
+
+    const busketTotalPrice = busketDishes.reduce(
+        (sum, busketDish) => sum + busketDish.quantity * busketDish.Dish.price,
+        restaurant?.deliveryFee
+    );
 
     useEffect(() => {
         DataStore.query(Busket, (b) => 
@@ -18,12 +24,20 @@ const BusketContextProvider = ({children}) => {
         ).then((buskets) => setBusket(buskets[0]));
     },[dbUser,restaurant])
 
+    useEffect(() => {
+        if(busket){
+            DataStore.query(BusketDish, (bd) => bd.busketID('eq', busket.id)).then(setBusketDishes)
+        }
+    },[busket]);
+
     const addDishToBusket = async (dish, quantity) => {
         // get the existing busket or create a new one
         let theBusket = busket || (await createNewBusket());
 
         // create a busketDish item and save to datastore
-        DataStore.save(new BusketDish({quantity, Dish: dish, busketID: theBusket.id }));
+        const newDish = DataStore.save(new BusketDish({quantity, Dish: dish, busketID: theBusket.id }));
+
+        setBusketDishes([...busketDishes, newDish]);
     };
 
     const createNewBusket = async () => {
@@ -33,7 +47,7 @@ const BusketContextProvider = ({children}) => {
     }
 
     return (
-        <BusketContext.Provider value={{addDishToBusket, setRestaurant}}>
+        <BusketContext.Provider value={{addDishToBusket, setRestaurant, busket, busketDishes, restaurant, busketTotalPrice}}>
             {children}
         </BusketContext.Provider>
     )

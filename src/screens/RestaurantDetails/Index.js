@@ -1,4 +1,4 @@
-import { View, FlatList, ActivityIndicator} from 'react-native';
+import { View, FlatList, ActivityIndicator, Pressable, Text} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 import DishListItem from '../../components/DishListItem/Index';
 import Header from './Header';
@@ -18,7 +18,7 @@ const RestaurantDetailsPage = () =>{
     const navigation = useNavigation();
 
     const id = route.params?.id; 
-    const {setRestaurant: setBusketRestaurant} = useBusketContext();
+    const {setRestaurant: setBusketRestaurant, busket, busketDishes} = useBusketContext();
 
     useEffect(() =>{
         if(!id){
@@ -54,8 +54,12 @@ const RestaurantDetailsPage = () =>{
                 color='white' 
                 style={styles.imageIcon} 
             /> 
+            { busket && <Pressable style={styles.button} onPress={() => navigation.navigate('Busket')}>
+                <Text style={styles.buttonText}>View basket ({busketDishes.length})</Text>
+            </Pressable>}
         </View>
     );
 };
+
 
 export default RestaurantDetailsPage;
