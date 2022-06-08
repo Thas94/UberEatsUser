@@ -9,8 +9,8 @@ const OrdersListItem = ({order}) => {
 
             <Pressable onPress={() => navigation.navigate('Order', {id: order.id})}>
                 <Text style={{fontSize: 17, fontWeight: 'bold'}}>{order.Restaurant.name}</Text>
-                <Text style={{marginVertical: 5}}>2 Items &#8226; R50.10</Text>
-                <Text>{order.createdAt} &#8226; {order.status}</Text>
+                <Text style={{marginVertical: 5}}>{order.length} Items &#8226; R{order.total.toFixed(2)}</Text>
+                <Text>{order.createdAt} &#8226; {order.status}</Text> 
             </Pressable>
         </View>
     );

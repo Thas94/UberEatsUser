@@ -14,7 +14,7 @@ const BusketContextProvider = ({children}) => {
     const [busketDishes, setBusketDishes] = useState([]); 
 
     const busketTotalPrice = busketDishes.reduce(
-        (sum, busketDish) => sum + busketDish.quantity * busketDish.Dish.price,
+        (sum, busketDish) => sum + busketDish.quantity * busketDish.Dish?.price,
         restaurant?.deliveryFee
     );
 
