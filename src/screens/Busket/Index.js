@@ -9,8 +9,8 @@ const Busket = () => {
     const navigate = useNavigation();
 
     const onCreateOrder = async () => {
-        await createOrder();
-        navigate.goBack();
+        const newOrder = await createOrder();
+        navigate.navigate('Orders', {screen: 'Order', params: {id: newOrder.id}});
     }
 
     const {restaurant, busketDishes, busketTotalPrice} = useBusketContext();

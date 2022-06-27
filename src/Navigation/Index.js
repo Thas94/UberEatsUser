@@ -10,6 +10,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { FontAwesome5, FontAwesome, MaterialCommunityIcons} from '@expo/vector-icons';
 import Profile from '../screens/Profile/Index';
 import { useAuthContext } from '../context/AuthContext';
+import {ActivityIndicator} from 'react-native';
+import OrderDetailsNavigator from './OrderDetailsNavigator';
  
 const Stack = createNativeStackNavigator();
 
@@ -18,7 +20,7 @@ const RootNavigator = () => {
     const {dbUser} = useAuthContext();
 
     return (
-        <Stack.Navigator screenOptions={{headerShown: false}}>
+        <Stack.Navigator screenOptions={{headerShown: false}}> 
 
             {!dbUser ? (
                 <Stack.Screen name='Profile' component={Profile} />  
@@ -65,7 +67,8 @@ const OrdersStackNavigator = () => {
     return(
         <OrdersStack.Navigator>
             <OrdersStack.Screen name='Orders Made' component={Orders}/>
-            <OrdersStack.Screen name='Order' component={OrderDetails}/>
+            <OrdersStack.Screen name='Order' component={OrderDetailsNavigator} 
+            screenOptions={{headerShown: false}}/>
         </OrdersStack.Navigator>
     );
 };

@@ -43,6 +43,8 @@ const OrderContextProvider = ({children}) => {
         await DataStore.delete(busket);
 
         setOrders([...orders, newOrder]); 
+
+        return newOrder;
     };
 
     const getOrderById = async (id) => {

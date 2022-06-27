@@ -29,12 +29,10 @@ const OrderDetailsHeader = ({order}) => {
     );
 };
 
-const OrderDetails = () => {
+const OrderDetails = ({id}) => {
 
     const [order, setOrder] = useState();
     const {getOrderById} = useOrderContext();
-    const route = useRoute();
-    const id = route.params?.id;
 
     useEffect(() =>{
         getOrderById(id).then(setOrder);
